@@ -1,7 +1,7 @@
 ---
 name: User Story - New Endpoint
 about: New user story for a new endpoint
-title: 'New Endpoint: GET /ap1/v1/'
+title: 'New Endpoint: GET /api/v1/'
 labels: new endpoint
 assignees: fentontaylor
 
