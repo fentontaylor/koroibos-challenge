@@ -25,6 +25,9 @@ Status: 200
 
 ### Error Response
 ```
-Status: 400
+Status: 404
 
+{
+  "error": "The route you requested does not exist. Check your spelling/syntax."
+}
 ```
