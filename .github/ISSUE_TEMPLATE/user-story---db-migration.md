@@ -13,7 +13,7 @@ assignees: fentontaylor
 
 ### Table:  
 
-### Attributes:
+### Attributes
 | Column | Type | Options |
 |---------|------|---------|
 |         |      |         |
