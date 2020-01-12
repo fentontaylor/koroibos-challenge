@@ -15,10 +15,10 @@ describe('Olympics table', () => {
 
   it('has an id and name', async() => {
     let games = await DB('olympics')
-      .insert({ id: 1, title: '2016 Summer' })
+      .insert({ id: 1, name: '2016 Summer' })
       .returning(['id', 'name'])
 
-    expect(games.id).toBe(1)
-    expect(games.name).toBe('2016 Summer')
+    expect(games[0].id).toBe(1)
+    expect(games[0].name).toBe('2016 Summer')
   })
 })
