@@ -1,5 +1,3 @@
-var app = require('../../app');
-
 const config = require('../../knexfile')['test'];
 const DB = require('knex')(config);
 

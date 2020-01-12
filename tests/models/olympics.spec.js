@@ -1,7 +1,4 @@
-var app = require('../../app');
-
-const env = process.env.NODE_ENV || 'test';
-const config = require('../../knexfile')[env];
+const config = require('../../knexfile')['test'];
 const DB = require('knex')(config);
 
 describe('Olympics table', () => {
