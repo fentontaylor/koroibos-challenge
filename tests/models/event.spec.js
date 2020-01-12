@@ -3,10 +3,12 @@ const DB = require('knex')(config);
 
 describe('Olympics table', () => {
   beforeEach(async() => {
+    await DB.raw("TRUNCATE TABLE events CASCADE");
     await DB.raw("TRUNCATE TABLE sports CASCADE");
   });
 
   afterEach(async() => {
+    await DB.raw("TRUNCATE TABLE events CASCADE");
     await DB.raw("TRUNCATE TABLE sports CASCADE");
   });
 
