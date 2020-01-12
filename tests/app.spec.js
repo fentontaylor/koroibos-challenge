@@ -6,7 +6,7 @@ describe('Test the root path', () => {
     const response = await request(app)
       .get("/");
 
-    expect(response.statusCode).toBe(200);
-    expect(response.json()).toBe('Koroibos Challenge - Fenton Taylor')
+    expect(response.status).toBe(200);
+    expect(response.body).toEqual({ "message": "Koroibos Challenge - Fenton Taylor" })
   });
 });
