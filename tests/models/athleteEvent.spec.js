@@ -64,26 +64,39 @@ describe('Olympics table', () => {
     expect(athlete_event[0].medal).toBe('Gold')
   })
 
-  // it('cascades on delete', async () => {
-  //   await DB('sports')
-  //     .insert({ 'id': 1, 'sport': 'Weightlifting' })
+  it('cascades on delete when deleting athlete', async () => {
+    var athlete_events = await DB('athlete_events')
+    expect(athlete_events.length).toBe(1)
 
-  //   await DB('events')
-  //     .insert({
-  //       'id': 1,
-  //       'sport_id': 1,
-  //       'event': "Weightlifting Women's Super- Heavyweight"
-  //     })
+    await DB('athletes').del()
+    var athlete_events = await DB('athlete_events')
+    expect(athlete_events.length).toBe(0)
+  })
 
-  //   var sports = await DB('sports')
-  //   var events = await DB('events')
-  //   expect(sports.length).toBe(1)
-  //   expect(events.length).toBe(1)
+  it('cascades on delete when deleting event', async () => {
+    var athlete_events = await DB('athlete_events')
+    expect(athlete_events.length).toBe(1)
 
-  //   await DB('sports').del()
-  //   var sports = await DB('sports')
-  //   var events = await DB('events')
-  //   expect(sports.length).toBe(0)
-  //   expect(events.length).toBe(0)
-  // })
+    await DB('events').del()
+    var athlete_events = await DB('athlete_events')
+    expect(athlete_events.length).toBe(0)
+  })
+
+  it('cascades on delete when deleting sport', async () => {
+    var athlete_events = await DB('athlete_events')
+    expect(athlete_events.length).toBe(1)
+
+    await DB('sports').del()
+    var athlete_events = await DB('athlete_events')
+    expect(athlete_events.length).toBe(0)
+  })
+
+  it('cascades on delete when deleting olympics', async () => {
+    var athlete_events = await DB('athlete_events')
+    expect(athlete_events.length).toBe(1)
+
+    await DB('olympics').del()
+    var athlete_events = await DB('athlete_events')
+    expect(athlete_events.length).toBe(0)
+  })
 })
