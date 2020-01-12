@@ -20,5 +20,11 @@ before_script:
   - knex migrate:latest --env test
 
 deploy:
+  provider: heroku
+  api_key:
+    secure: 764a9624-2924-4824-a22e-cbaa43515b17
+  app:
+    dev: staging-olympians
+    master: olympians
   run:
     - knex migrate:latest
