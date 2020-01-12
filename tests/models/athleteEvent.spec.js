@@ -2,7 +2,7 @@ const config = require('../../knexfile')['test'];
 const DB = require('knex')(config);
 
 describe('Olympics table', () => {
-  beforeEach(async () => {
+  beforeEach(async() => {
     await DB.raw("TRUNCATE TABLE athlete_events CASCADE");
     await DB.raw("TRUNCATE TABLE events CASCADE");
     await DB.raw("TRUNCATE TABLE sports CASCADE");
@@ -48,7 +48,7 @@ describe('Olympics table', () => {
       .returning(['id', 'athlete_id', 'event_id', 'olympics_id', 'medal'])
   });
 
-  afterEach(async () => {
+  afterEach(async() => {
     await DB.raw("TRUNCATE TABLE athlete_events CASCADE");
     await DB.raw("TRUNCATE TABLE events CASCADE");
     await DB.raw("TRUNCATE TABLE sports CASCADE");
@@ -56,34 +56,7 @@ describe('Olympics table', () => {
     await DB.raw("TRUNCATE TABLE athletes CASCADE");
   });
 
-  it('has an id and name', async () => {
-    // await DB('athletes')
-    //   .insert({
-    //     'id': 1,
-    //     'name': 'Bob Bobson',
-    //     'sex': 'M',
-    //     'height': 170,
-    //     'weight': 135,
-    //     'age': 35,
-    //     'team': 'USA'
-    //   })
-
-    // await DB('olympics')
-    //   .insert({ 'id': 1, 'name': '2016 Summer' })
-
-    // await DB('sports')
-    //   .insert({ 'id': 1, 'sport': 'Weightlifting' })
-
-    // await DB('events')
-    //   .insert({
-    //     'id': 1,
-    //     'sport_id': 1,
-    //     'event': "Weightlifting Men's Super- Heavyweight"
-    //   })
-
-    // let event = await DB('sports')
-    //   .join('events', 'sports.id', '=', 'events.sport_id')
-
+  it('has an attributes', async() => {
     expect(athlete_event[0].id).toBe(1)
     expect(athlete_event[0].athlete_id).toBe(athlete[0].id)
     expect(athlete_event[0].event_id).toBe(event[0].id)

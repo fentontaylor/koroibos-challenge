@@ -12,7 +12,7 @@ describe('Olympics table', () => {
     await DB.raw("TRUNCATE TABLE sports CASCADE");
   });
 
-  it('has an id and name', async() => {
+  it('has attributes', async() => {
     await DB('sports')
       .insert({ 'id': 1, 'sport': 'Weightlifting' })
     

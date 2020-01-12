@@ -2,15 +2,15 @@ const config = require('../../knexfile')['test'];
 const DB = require('knex')(config);
 
 describe('Olympics table', () => {
-  beforeEach(async () => {
+  beforeEach(async() => {
     await DB.raw("TRUNCATE TABLE sports CASCADE");
   });
 
-  afterEach(async () => {
+  afterEach(async() => {
     await DB.raw("TRUNCATE TABLE sports CASCADE");
   });
 
-  it('has an id and name', async () => {
+  it('has attributes', async() => {
     let sport = await DB('sports')
       .insert({ 'id': 1, 'sport': 'Weightlifting' })
       .returning(['id', 'sport'])
