@@ -2,7 +2,7 @@
   "name": "koroibos-challenge",
   "version": "1.0.0",
   "description": "Final take-home challenge, Module 4",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "start": "nodemon start",
     "test": "jest --config ./jest.config.js --forceExit --coverage --runInBand --detectOpenHandles"
