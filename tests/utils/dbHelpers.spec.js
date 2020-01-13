@@ -42,6 +42,7 @@ describe('DB Helper functions', () => {
 
       let allOlympics = await DB('olympics');
       expect(allOlympics.length).toBe(1);
+      expect(olympics.id).toBe(olympics2.id);
     })
 
     describe('createAthlete', () => {
@@ -55,14 +56,23 @@ describe('DB Helper functions', () => {
         expect(athlete.team).toBe('Ireland');
       })
 
+      it("won't create a duplicate athlete", async () => {
+        let athlete  = await createAthlete(data);
+        let athlete2 = await createAthlete(data);
+        
+        let allAthletes = await DB('athletes');
+        expect(allAthletes.length).toBe(1);
+        expect(athlete.id).toBe(athlete2.id);
+      })
+
       it('creates an athlete record from data', async () => {
         let nullData = {
           Name: 'Ciara Everard',
-          Sex: 'NA',
+          Sex: 'F',
           Age: 'NA',
           Height: 'NA',
           Weight: 'NA',
-          Team: 'NA',
+          Team: 'Ireland',
           Games: '2016 Summer',
           Sport: 'Athletics',
           Event: 'Athletics Women\'s 800 metres',
@@ -71,11 +81,11 @@ describe('DB Helper functions', () => {
 
         let athlete = await createAthlete(nullData);
         expect(athlete.name).toBe('Ciara Everard');
-        expect(athlete.sex).toBeNull();
+        expect(athlete.sex).toBe('F');
+        expect(athlete.team).toBe('Ireland');
         expect(athlete.height).toBeNull();
         expect(athlete.weight).toBeNull();
         expect(athlete.age).toBeNull();
-        expect(athlete.team).toBeNull();
       })
     })
 
@@ -89,6 +99,7 @@ describe('DB Helper functions', () => {
 
         let allSports = await DB('sports');
         expect(allSports.length).toBe(1);
+        expect(sport.id).toBe(sport2.id);
       })
     })
 
@@ -124,11 +135,11 @@ describe('DB Helper functions', () => {
       it('creates with "null" for medal if value is "NA"', async () => {
         let nullData = {
           Name: 'Ciara Everard',
-          Sex: 'NA',
+          Sex: 'F',
           Age: 'NA',
           Height: 'NA',
           Weight: 'NA',
-          Team: 'NA',
+          Team: 'Ireland',
           Games: '2016 Summer',
           Sport: 'Athletics',
           Event: 'Athletics Women\'s 800 metres',
