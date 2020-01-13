@@ -13,7 +13,7 @@ async function olympianIndex() {
 		      "INNER JOIN sports s " +
 			      "ON e.sport_id = s.id) as t " +
         "GROUP BY t.name, t.age, t.sport, t.team " +
-        "ORDER BY t.name;"
+        "ORDER BY sport ASC, total_medals_won DESC;"
     )
     return result.rows;
   } catch(err) {
