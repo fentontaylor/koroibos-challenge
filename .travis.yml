@@ -15,6 +15,16 @@ install:
 script:
   - npm test
 
-# before_script:
-#   - psql -c 'create database play_test;' -U postgres
-#   - knex migrate:latest --env test
+before_script:
+  - psql -c 'create database koroibos_test;' -U postgres
+  - knex migrate:latest --env test
+
+deploy:
+  provider: heroku
+  api_key:
+    secure: 764a9624-2924-4824-a22e-cbaa43515b17
+  app:
+    dev: staging-olympians
+    master: olympians
+  run:
+    - knex migrate:latest
