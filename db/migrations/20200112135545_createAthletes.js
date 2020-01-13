@@ -2,12 +2,12 @@
 exports.up = function(knex) {
   return knex.schema.createTable('athletes', (table) => {
     table.increments('id').primary();
-    table.string('name').notNullable();
-    table.string('sex').notNullable();
-    table.string('team').notNullable();
-    table.integer('height').notNullable();
-    table.integer('weight').notNullable();
-    table.integer('age').notNullable();
+    table.string('name');
+    table.string('sex');
+    table.string('team');
+    table.integer('height');
+    table.integer('weight');
+    table.integer('age');
 
     table.timestamps(true, true);
   })
