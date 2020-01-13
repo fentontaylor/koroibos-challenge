@@ -3,14 +3,16 @@ const DB = require('knex')(config);
 
 describe('Olympics table', () => {
   beforeEach(async() => {
+    await DB.raw("TRUNCATE TABLE events CASCADE");
     await DB.raw("TRUNCATE TABLE sports CASCADE");
   });
 
   afterEach(async() => {
+    await DB.raw("TRUNCATE TABLE events CASCADE");
     await DB.raw("TRUNCATE TABLE sports CASCADE");
   });
 
-  it('has an id and name', async() => {
+  it('has attributes', async() => {
     await DB('sports')
       .insert({ 'id': 1, 'sport': 'Weightlifting' })
     

@@ -11,11 +11,11 @@ describe('Olympics table', () => {
   });
 
   it('has an id and name', async() => {
-    let games = await DB('olympics')
-      .insert({ id: 1, name: '2016 Summer' })
-      .returning(['id', 'name'])
+    let result = await DB('olympics')
+      .insert({ id: 1, games: '2016 Summer' })
+      .returning(['id', 'games'])
 
-    expect(games[0].id).toBe(1)
-    expect(games[0].name).toBe('2016 Summer')
+    expect(result[0].id).toBe(1)
+    expect(result[0].games).toBe('2016 Summer')
   })
 })
