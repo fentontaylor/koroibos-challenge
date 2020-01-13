@@ -26,7 +26,7 @@ describe('Seed Helper functions', () => {
       Games: '2016 Summer',
       Sport: 'Athletics',
       Event: 'Athletics Women\'s 800 metres',
-      Medal: 'NA'
+      Medal: 'Bronze'
     }
   });
 
@@ -111,10 +111,55 @@ describe('Seed Helper functions', () => {
         let allEvents = await DB('events');
         expect(allEvents.length).toBe(1);
       })
+    })
 
-      it('catches an internal error', async () => {
-        let event = await createEvent(data);
-        console.log(event)
+    describe('createAthleteEvent', () => {
+      it('creates an athlete_event', async () => {
+        let athlete = await createAthlete(data);
+        let olympics = await createOlympics(data);
+        let sport = await createSport(data);
+        let event = await createEvent(data, sport);
+        let athleteEvent = await createAthleteEvent(data, athlete, event, olympics);
+
+        expect(athleteEvent.athlete_id).toBe(athlete.id);
+        expect(athleteEvent.event_id).toBe(event.id);
+        expect(athleteEvent.olympics_id).toBe(olympics.id);
+        expect(athleteEvent.medal).toBe('Bronze')
+      })
+
+      t('creates with "null" for medal if value is "NA"', async () => {
+        let nullData = {
+          Name: 'Ciara Everard',
+          Sex: 'NA',
+          Age: 'NA',
+          Height: 'NA',
+          Weight: 'NA',
+          Team: 'NA',
+          Games: '2016 Summer',
+          Sport: 'Athletics',
+          Event: 'Athletics Women\'s 800 metres',
+          Medal: 'NA'
+        }
+
+        let athlete = await createAthlete(nullData);
+        let olympics = await createOlympics(nullData);
+        let sport = await createSport(nullData);
+        let event = await createEvent(nullData, sport);
+        let athleteEvent = await createAthleteEvent(nullData, athlete, event, olympics);
+
+        expect(athleteEvent.athlete_id).toBe(athlete.id);
+        expect(athleteEvent.event_id).toBe(event.id);
+        expect(athleteEvent.olympics_id).toBe(olympics.id);
+        expect(athleteEvent.medal).toBe('Bronze')
+      })
+    })
+
+    describe('error handling', () => {
+      it('catches internal errors', async () => {
+        await createAthlete();
+        await createOlympics();
+        await createSport();
+        await createEvent();
       })
     })
   })
