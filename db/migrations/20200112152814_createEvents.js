@@ -8,6 +8,7 @@ exports.up = function(knex) {
       .references('sports.id')
       .onDelete('CASCADE');
     table.string('event');
+    table.unique('event');
 
     table.timestamps(true, true);
   })
