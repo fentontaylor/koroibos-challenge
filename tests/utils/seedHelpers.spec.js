@@ -111,6 +111,11 @@ describe('Seed Helper functions', () => {
         let allEvents = await DB('events');
         expect(allEvents.length).toBe(1);
       })
+
+      it('catches an internal error', async () => {
+        let event = await createEvent(data);
+        console.log(event)
+      })
     })
   })
 })
