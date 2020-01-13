@@ -36,7 +36,49 @@ async function createOlympics(row) {
   }
 }
 
+async function createSport(row) {
+  try {
+    let sport = row.Sport;
+    let result = await DB('sports')
+      .where({ sport: sport });
+
+    if (result.length === 0) {
+      let newSport = await DB('sports')
+        .insert({ sport: sport })
+        .returning('*');
+
+      return newSport[0];
+    } else {
+      return result[0];
+    }
+  } catch (err) {
+    console.log(err.detail)
+  }
+}
+
+async function createEvent(row, sport) {
+  try {
+    let event = row.Event;
+    let result = await DB('events')
+      .where({ event: event })
+    
+    if (result.length === 0) {
+      let newEvent = await DB('events')
+        .insert({ event: event, sport_id: sport.id })
+        .returning('*');
+      
+      return newEvent[0];
+    } else {
+      return result[0];
+    }
+  } catch (err) {
+    console.log(err.detail);
+  }
+}
+
 module.exports = {
   createAthlete: createAthlete,
-  createOlympics: createOlympics
+  createOlympics: createOlympics,
+  createSport: createSport,
+  createEvent: createEvent
 }
