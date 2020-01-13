@@ -3,7 +3,9 @@ const DB = require('knex')(config);
 const seedHelpers = require('../../utils/seedHelpers');
 const {
   createOlympics,
-  createAthlete
+  createAthlete,
+  createSport,
+  createEvent
 } = seedHelpers;
 
 describe('Seed Helper functions', () => {
@@ -80,6 +82,34 @@ describe('Seed Helper functions', () => {
         expect(athlete.weight).toBeNull();
         expect(athlete.age).toBeNull();
         expect(athlete.team).toBeNull();
+      })
+    })
+
+    describe('createSport', () => {
+      it('creates a record of a sport without creating duplicates', async () => {
+        let sport = await createSport(data);
+        expect(sport.sport).toBe('Athletics');
+
+        let sport2 = await createSport(data);
+        expect(sport2.sport).toBe('Athletics');
+
+        let allSports = await DB('sports');
+        expect(allSports.length).toBe(1);
+      })
+    })
+
+    describe('createEvent', () => {
+      it('creates a record of an even without creating duplicates', async () => {
+        let sport = await createSport(data);
+
+        let event = await createEvent(data, sport);
+        expect(event.event).toBe('Athletics Women\'s 800 metres');
+
+        let event2 = await createEvent(data, sport);
+        expect(event2.event).toBe('Athletics Women\'s 800 metres');
+
+        let allEvents = await DB('events');
+        expect(allEvents.length).toBe(1);
       })
     })
   })
