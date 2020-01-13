@@ -8,8 +8,8 @@ const {
   destroyAll
 } = require('./dbHelpers')
 
-function runSeed(file) {
-  csv()
+async function runSeed(file) {
+  await csv()
     .fromFile(file)
     .subscribe(async (row) => {
       var athlete = await createAthlete(row);
@@ -23,15 +23,14 @@ function runSeed(file) {
         sport: sport,
         event: event,
         athleteEvent: athleteEvent
-      }
-      );
+      });
     })
 }
 
 function dbSetupWith(file) {
   destroyAll()
-    .then(() => {
-      runSeed(file)
+    .then(async () => {
+      await runSeed(file)
     })
 }
 
