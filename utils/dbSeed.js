@@ -26,7 +26,6 @@ function runSeed(file) {
       }
       );
     })
-  console.log('Seeding COMPLETE. Press CTRL + C to exit.')
 }
 
 function dbSetupWith(file) {
