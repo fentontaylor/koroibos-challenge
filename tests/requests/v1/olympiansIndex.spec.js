@@ -1,8 +1,7 @@
 var request = require("supertest");
 var app = require('../../../app');
 
-const config = require('../../../knexfile')['test'];
-const DB = require('knex')(config);
+const DB = require('../../../utils/dbConnect');
 const { dbSetupWith } = require('../../../utils/dbSeed');
 const {
   createOlympics,
