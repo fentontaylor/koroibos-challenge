@@ -5,11 +5,13 @@ const {
   createOlympics,
   createSport,
   createEvent,
-  createAthleteEvent
+  createAthleteEvent,
+  destroyAll
 } = require('./dbHelpers')
 
+destroyAll();
 
-var readStream = fs.createReadStream('db/data/olympic_data_2016.csv');
+var readStream = fs.createReadStream('db/data/test_olympic_data_2016.csv');
 readStream
   .pipe(csv())
   .on('data', (row) => {
