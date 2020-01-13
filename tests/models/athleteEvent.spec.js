@@ -1,5 +1,4 @@
-const config = require('../../knexfile')['test'];
-const DB = require('knex')(config);
+const DB = require('../../utils/dbConnect');
 
 describe('Olympics table', () => {
   beforeEach(async() => {

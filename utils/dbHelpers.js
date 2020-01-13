@@ -1,7 +1,5 @@
-const env = process.env.NODE_ENV || 'development';
-const config = require('../knexfile')[env];
-const DB = require('knex')(config);
-const AthleteFormatter = require('./athleteFormatter')
+const DB = require('./dbConnect');
+const AthleteFormatter = require('./athleteFormatter');
 
 async function destroyAll() {
   await DB.raw("TRUNCATE TABLE athlete_events CASCADE");
