@@ -1,21 +1,18 @@
 const config = require('../../knexfile')['test'];
 const DB = require('knex')(config);
-const seedHelpers = require('../../utils/seedHelpers');
+const dbHelpers = require('../../utils/dbHelpers');
 const {
   createOlympics,
   createAthlete,
   createSport,
   createEvent,
-  createAthleteEvent
-} = seedHelpers;
+  createAthleteEvent,
+  destroyAll
+} = dbHelpers;
 
-describe('Seed Helper functions', () => {
+describe('DB Helper functions', () => {
   beforeEach(async () => {
-    await DB.raw("TRUNCATE TABLE athlete_events CASCADE");
-    await DB.raw("TRUNCATE TABLE events CASCADE");
-    await DB.raw("TRUNCATE TABLE sports CASCADE");
-    await DB.raw("TRUNCATE TABLE olympics CASCADE");
-    await DB.raw("TRUNCATE TABLE athletes CASCADE");
+    await destroyAll();
 
     data = {
       Name: 'Ciara Everard',
@@ -32,11 +29,7 @@ describe('Seed Helper functions', () => {
   });
 
   afterEach(async () => {
-    await DB.raw("TRUNCATE TABLE athlete_events CASCADE");
-    await DB.raw("TRUNCATE TABLE events CASCADE");
-    await DB.raw("TRUNCATE TABLE sports CASCADE");
-    await DB.raw("TRUNCATE TABLE olympics CASCADE");
-    await DB.raw("TRUNCATE TABLE athletes CASCADE");
+    await destroyAll()
   });
 
   describe('createOlympics', () => {

@@ -3,6 +3,13 @@ const config = require('../knexfile')[env];
 const DB = require('knex')(config);
 const AthleteFormatter = require('./athleteFormatter')
 
+async function destroyAll() {
+  await DB.raw("TRUNCATE TABLE athlete_events CASCADE");
+  await DB.raw("TRUNCATE TABLE events CASCADE");
+  await DB.raw("TRUNCATE TABLE sports CASCADE");
+  await DB.raw("TRUNCATE TABLE olympics CASCADE");
+  await DB.raw("TRUNCATE TABLE athletes CASCADE");
+}
 
 async function createAthlete(row) {
   try {
@@ -98,5 +105,6 @@ module.exports = {
   createOlympics: createOlympics,
   createSport: createSport,
   createEvent: createEvent,
-  createAthleteEvent: createAthleteEvent
+  createAthleteEvent: createAthleteEvent,
+  destroyAll: destroyAll
 }

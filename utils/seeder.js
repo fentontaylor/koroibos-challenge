@@ -6,7 +6,7 @@ const {
   createSport,
   createEvent,
   createAthleteEvent
-} = require('./seedHelpers')
+} = require('./dbHelpers')
 
 
 var readStream = fs.createReadStream('db/data/olympic_data_2016.csv');
