@@ -13,6 +13,19 @@ describe('Seed Helper functions', () => {
     await DB.raw("TRUNCATE TABLE sports CASCADE");
     await DB.raw("TRUNCATE TABLE olympics CASCADE");
     await DB.raw("TRUNCATE TABLE athletes CASCADE");
+
+    data = {
+      Name: 'Ciara Everard',
+      Sex: 'F',
+      Age: '26',
+      Height: '169',
+      Weight: '54',
+      Team: 'Ireland',
+      Games: '2016 Summer',
+      Sport: 'Athletics',
+      Event: 'Athletics Women\'s 800 metres',
+      Medal: 'NA'
+    }
   });
 
   afterEach(async () => {
@@ -25,19 +38,6 @@ describe('Seed Helper functions', () => {
 
   describe('createOlympics', () => {
     it('creates an olympics record, but not duplicates', async () => {
-      let data = {
-        Name: 'Ciara Everard',
-        Sex: 'F',
-        Age: '26',
-        Height: '169',
-        Weight: '54',
-        Team: 'Ireland',
-        Games: '2016 Summer',
-        Sport: 'Athletics',
-        Event: 'Athletics Women\'s 800 metres',
-        Medal: 'NA'
-      }
-
       let olympics = await createOlympics(data);
       expect(olympics.games).toBe('2016 Summer');
 
@@ -50,19 +50,6 @@ describe('Seed Helper functions', () => {
 
     describe('createAthlete', () => {
       it('creates an athlete record from data', async () => {
-        let data = {
-          Name: 'Ciara Everard',
-          Sex: 'F',
-          Age: '26',
-          Height: '169',
-          Weight: '54',
-          Team: 'Ireland',
-          Games: '2016 Summer',
-          Sport: 'Athletics',
-          Event: 'Athletics Women\'s 800 metres',
-          Medal: 'NA'
-        }
-
         let athlete = await createAthlete(data);
         expect(athlete.name).toBe('Ciara Everard');
         expect(athlete.sex).toBe('F');
@@ -70,6 +57,29 @@ describe('Seed Helper functions', () => {
         expect(athlete.weight).toBe(54);
         expect(athlete.age).toBe(26);
         expect(athlete.team).toBe('Ireland');
+      })
+
+      it('creates an athlete record from data', async () => {
+        let nullData = {
+          Name: 'Ciara Everard',
+          Sex: 'NA',
+          Age: 'NA',
+          Height: 'NA',
+          Weight: 'NA',
+          Team: 'NA',
+          Games: '2016 Summer',
+          Sport: 'Athletics',
+          Event: 'Athletics Women\'s 800 metres',
+          Medal: 'NA'
+        }
+
+        let athlete = await createAthlete(nullData);
+        expect(athlete.name).toBe('Ciara Everard');
+        expect(athlete.sex).toBeNull();
+        expect(athlete.height).toBeNull();
+        expect(athlete.weight).toBeNull();
+        expect(athlete.age).toBeNull();
+        expect(athlete.team).toBeNull();
       })
     })
   })
