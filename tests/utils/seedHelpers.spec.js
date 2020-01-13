@@ -5,7 +5,8 @@ const {
   createOlympics,
   createAthlete,
   createSport,
-  createEvent
+  createEvent,
+  createAthleteEvent
 } = seedHelpers;
 
 describe('Seed Helper functions', () => {
@@ -127,7 +128,7 @@ describe('Seed Helper functions', () => {
         expect(athleteEvent.medal).toBe('Bronze')
       })
 
-      t('creates with "null" for medal if value is "NA"', async () => {
+      it('creates with "null" for medal if value is "NA"', async () => {
         let nullData = {
           Name: 'Ciara Everard',
           Sex: 'NA',
@@ -150,7 +151,7 @@ describe('Seed Helper functions', () => {
         expect(athleteEvent.athlete_id).toBe(athlete.id);
         expect(athleteEvent.event_id).toBe(event.id);
         expect(athleteEvent.olympics_id).toBe(olympics.id);
-        expect(athleteEvent.medal).toBe('Bronze')
+        expect(athleteEvent.medal).toBeNull()
       })
     })
 
@@ -160,6 +161,7 @@ describe('Seed Helper functions', () => {
         await createOlympics();
         await createSport();
         await createEvent();
+        await createAthleteEvent();
       })
     })
   })
