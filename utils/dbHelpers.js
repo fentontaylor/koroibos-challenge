@@ -14,10 +14,18 @@ async function destroyAll() {
 async function createAthlete(row) {
   try {
     let data = new AthleteFormatter(row);
-    let athlete = await DB('athletes')
-      .insert(data)
-      .returning('*');
-    return athlete[0];
+    let result = await DB('athletes')
+      .where({ name: data.name, team: data.team });
+
+    if (result.length === 0) {
+      let athlete = await DB('athletes')
+        .insert(data)
+        .returning('*');
+
+      return athlete[0];
+    } else {
+      return result[0];
+    }
   } catch (err) {
     console.log(err);
   }
@@ -25,13 +33,12 @@ async function createAthlete(row) {
 
 async function createOlympics(row) {
   try {
-    let games = row.Games;
     let result = await DB('olympics')
-      .where({ games: games });
+      .where({ games: row.Games });
 
     if (result.length === 0) {
       let olympics = await DB('olympics')
-        .insert({ games: games })
+        .insert({ games: row.Games })
         .returning('*');
 
       return olympics[0];
@@ -45,13 +52,12 @@ async function createOlympics(row) {
 
 async function createSport(row) {
   try {
-    let sport = row.Sport;
     let result = await DB('sports')
-      .where({ sport: sport });
+      .where({ sport: row.Sport });
 
     if (result.length === 0) {
       let newSport = await DB('sports')
-        .insert({ sport: sport })
+        .insert({ sport: row.Sport })
         .returning('*');
 
       return newSport[0];
@@ -65,13 +71,12 @@ async function createSport(row) {
 
 async function createEvent(row, sport) {
   try {
-    let event = row.Event;
     let result = await DB('events')
-      .where({ event: event })
+      .where({ event: row.Event })
     
     if (result.length === 0) {
       let newEvent = await DB('events')
-        .insert({ event: event, sport_id: sport.id })
+        .insert({ event: row.Event, sport_id: sport.id })
         .returning('*');
       
       return newEvent[0];
