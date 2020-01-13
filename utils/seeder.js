@@ -1,5 +1,4 @@
-const csv = require('csv-parser');
-const fs = require('fs');
+const csv = require('csvtojson');
 const {
   createAthlete,
   createOlympics,
@@ -9,23 +8,24 @@ const {
   destroyAll
 } = require('./dbHelpers')
 
-destroyAll();
+function runSeed() {
+  csv()
+    .fromFile('db/data/olympic_data_2016.csv')
+    .subscribe(async(row)=>{
+      var athlete = await createAthlete(row);
+      var olympics = await createOlympics(row);
+      var sport = await createSport(row);
+      var event = await createEvent(row, sport);
+      var athleteEvent = await createAthleteEvent(row, athlete, event, olympics);
+      console.log('CREATED FROM ROW:', {
+        athlete: athlete,
+        olympics: olympics,
+        sport: sport,
+        event: event,
+        athleteEvent: athleteEvent
+      }
+      );
+    })
+}
 
-var readStream = fs.createReadStream('db/data/test_olympic_data_2016.csv');
-readStream
-  .pipe(csv())
-  .on('data', (row) => {
-    var athlete = createAthlete(row);
-    var olympics = createOlympics(row);
-    var sport = createSport(row);
-    var event = createEvent(row, sport);
-    createAthleteEvent(row, athlete, event, olympics);
-    console.log(row);
-  })
-  .on('end', () => {
-    console.log('CSV file successfully processed');
-  })
-  .on('close', (err) => {
-    console.log('Closing file.');
-    readStream.destroy();
-  });
+destroyAll().then(() => runSeed());
