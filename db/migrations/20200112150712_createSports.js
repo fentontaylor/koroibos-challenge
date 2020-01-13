@@ -2,7 +2,7 @@
 exports.up = function(knex) {
   return knex.schema.createTable('sports', (table) => {
     table.increments('id').primary();
-    table.string('sport').notNullable();
+    table.string('sport');
 
     table.timestamps(true, true);
   })
