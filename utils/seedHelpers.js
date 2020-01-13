@@ -12,7 +12,7 @@ async function createAthlete(row) {
       .returning('*');
     return athlete[0];
   } catch (err) {
-    console.log(err.detail)
+    console.log(err);
   }
 }
 
@@ -32,7 +32,7 @@ async function createOlympics(row) {
       return result[0];
     }
   } catch (err) {
-    console.log(err.detail);
+    console.log(err);
   }
 }
 
@@ -52,7 +52,7 @@ async function createSport(row) {
       return result[0];
     }
   } catch (err) {
-    console.log(err.detail)
+    console.log(err);
   }
 }
 
@@ -72,7 +72,24 @@ async function createEvent(row, sport) {
       return result[0];
     }
   } catch (err) {
-    console.log(err.detail);
+    console.log(err);
+  }
+}
+
+async function createAthleteEvent(row, athlete, event, olympics) {
+  try {
+    let medal = row.Medal === 'NA' ? null : row.Medal
+    let result = await DB('athlete_events')
+      .insert({
+        athlete_id: athlete.id,
+        event_id: event.id,
+        olympics_id: olympics.id,
+        medal: medal
+      }).returning('*');
+
+    return result[0];
+  } catch(err) {
+    console.log(err);
   }
 }
 
@@ -80,5 +97,6 @@ module.exports = {
   createAthlete: createAthlete,
   createOlympics: createOlympics,
   createSport: createSport,
-  createEvent: createEvent
+  createEvent: createEvent,
+  createAthleteEvent: createAthleteEvent
 }
