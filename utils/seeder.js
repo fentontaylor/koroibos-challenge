@@ -26,6 +26,7 @@ function runSeed() {
       }
       );
     })
+  console.log('Seeding COMPLETE. Press CTRL + C to exit.')
 }
 
 destroyAll().then(() => runSeed());
