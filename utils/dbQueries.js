@@ -47,7 +47,13 @@ async function sportEvents() {
   try {
     let result = await Sport.query()
       .withGraphJoined('events(onlyEventName)')
-      .select('sport', 'events');
+      .select('sport', 'events')
+      .then(events => events.map(obj => {
+        return {
+          sport: obj.sport,
+          events: obj.events.map(e => e.event)
+        }
+      }));
 
     return { events: result };
   } catch(err) {
