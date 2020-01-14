@@ -25,15 +25,15 @@ describe('GET /api/v1/events', () => {
         {
           sport: 'Athletics',
           events: [
-            'Athletics Women\'s Marathon',
-            'Athletics Men\'s Pole Vault'
+            'Athletics Men\'s Pole Vault',
+            'Athletics Women\'s Marathon'
           ]
         },
         {
           sport: 'Gymnastics',
           events: [
-            'Gymnastics Women\'s Balance Beam',
-            'Gymnastics Men\'s Rings'
+            'Gymnastics Men\'s Rings',
+            'Gymnastics Women\'s Balance Beam'
           ]
         }
       ]
