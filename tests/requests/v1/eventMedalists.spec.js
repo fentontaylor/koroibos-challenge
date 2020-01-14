@@ -13,7 +13,7 @@ const {
 describe('GET /api/v1/events/:id/medalists', () => {
   beforeEach(async () => {
     await destroyAll();
-    let data = [
+    data = [
       {
         Name: 'Mark Hamill',
         Sex: 'M',
@@ -63,10 +63,17 @@ describe('GET /api/v1/events/:id/medalists', () => {
         Medal: 'Gold'
       }
     ]
+  });
+
+  afterEach(async () => {
+    await destroyAll();
+  });
+
+  it('return number of athletes, average weight by sex, average age', async () => {
     let athlete = await createAthlete(data[0]);
     let olympics = await createOlympics(data[0]);
     let sport = await createSport(data[0]);
-    event = await createEvent(data[0], sport);
+    let event = await createEvent(data[0], sport);
     await createAthleteEvent(data[0], athlete, event, olympics);
 
     let athlete2 = await createAthlete(data[1]);
@@ -86,13 +93,7 @@ describe('GET /api/v1/events/:id/medalists', () => {
     let sport4 = await createSport(data[3]);
     let event4 = await createEvent(data[3], sport4);
     await createAthleteEvent(data[3], athlete4, event4, olympics4);
-  });
 
-  afterEach(async () => {
-    await destroyAll();
-  });
-
-  it('return number of athletes, average weight by sex, average age', async () => {
     let expected = {
       event: 'Diving Men\'s Platform',
       medalists: [
@@ -116,7 +117,6 @@ describe('GET /api/v1/events/:id/medalists', () => {
         }
       ]
     }
-
     let response = await request(app).get(`/api/v1/events/${event.id}/medalists`)
 
     expect(response.status).toBe(200)
