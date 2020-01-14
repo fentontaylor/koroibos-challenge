@@ -7,7 +7,7 @@ const {
 } = require('../../../utils/dbQueries');
 
 router.get('/', (request, response) => {
-  olympianIndex()
+  olympianIndex(request.query)
     .then((dbResult) => response.status(200).send({ olympians: dbResult }))
     .catch((error) => response.status(500).send({ error }))
 });
