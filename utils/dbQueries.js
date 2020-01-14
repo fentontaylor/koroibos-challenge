@@ -24,6 +24,26 @@ async function olympianIndex(params) {
   }
 }
 
+async function olympianStats() {
+  try {
+    let numAthletes = await _countAthletes();
+    let averageAge = await _averageAge();
+    console.log('AVG AGE:', averageAge)
+  } catch(err) {
+    console.log(err)
+  }
+}
+
+async function _countAthletes() {
+  let result = await DB('athletes').count('*')
+  return result[0].count
+}
+
+async function _averageAge() {
+  var result = await DB.raw('SELECT CAST(ROUND(AVG(age), 2) as float) FROM athletes')
+  return result.rows[0].round
+}
+
 function _addToQuery(params) {
   var clause = ''
   if (params.age === 'youngest') {
@@ -35,5 +55,6 @@ function _addToQuery(params) {
 }
 
 module.exports = {
-  olympianIndex: olympianIndex
+  olympianIndex: olympianIndex,
+  olympianStats: olympianStats
 }
