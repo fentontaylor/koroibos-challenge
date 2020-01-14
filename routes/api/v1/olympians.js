@@ -2,9 +2,7 @@ var express = require('express');
 var router = express.Router();
 
 const DB = require('../../../utils/dbConnect');
-const {
-  olympianIndex
-} = require('../../../utils/dbQueries');
+const { olympianIndex } = require('../../../utils/dbQueries');
 
 router.get('/', (request, response) => {
   olympianIndex(request.query)
