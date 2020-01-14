@@ -24,7 +24,7 @@ class Event extends Model {
   static get modifiers() {
     return {
       onlyEventName(builder) {
-        builder.select('event').orderBy('event')
+        builder.select('event').orderBy('event', 'asc')
       }
     }
   }
