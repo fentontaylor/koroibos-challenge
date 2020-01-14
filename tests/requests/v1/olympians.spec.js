@@ -104,4 +104,24 @@ describe('GET /api/v1/olympians', ()=>{
     expect(response.status).toBe(200);
     expect(response.body).toEqual(expected);
   })
+
+  it('can get the oldest olympian', async () => {
+    let expected = {
+      "olympians": [
+        {
+          "name": "Ciara Everard",
+          "team": "Ireland",
+          "age": 26,
+          "sport": "Athletics",
+          "total_medals_won": 1
+        }
+      ]
+    }
+
+    var response = await request(app)
+      .get('/api/v1/olympians?age=oldest');
+
+    expect(response.status).toBe(200);
+    expect(response.body).toEqual(expected);
+  })
 })
