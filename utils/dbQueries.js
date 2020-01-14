@@ -61,6 +61,29 @@ async function sportEvents() {
   }
 }
 
+async function eventMedalists(eventId) {
+  try {
+    let eventName = await DB('events')
+      .where('id', eventId)
+      .pluck('event')
+    let medalists = await DB('events')
+      .join('athlete_events', {'athlete_events.event_id': 'events.id'})
+      .join('athletes', {'athlete_events.athlete_id': 'athletes.id'})
+      .where('events.id', eventId)
+      .select('name', 'team', 'age', 'medal')
+      .orderByRaw(
+        "CASE WHEN medal = 'Gold' THEN '1' " +
+            "WHEN medal = 'Silver' THEN '2' " +
+            "ELSE medal END ASC")
+    return {
+      event: eventName[0],
+      medalists: medalists
+    }
+  } catch(err) {
+    console.log(err)
+  }
+}
+
 async function _countAthletes() {
   let result = await DB('athletes').count('*')
   return parseInt(result[0].count)
@@ -98,5 +121,6 @@ function _addToQuery(params) {
 module.exports = {
   olympianIndex: olympianIndex,
   olympianStats: olympianStats,
-  sportEvents: sportEvents
+  sportEvents: sportEvents,
+  eventMedalists: eventMedalists
 }
