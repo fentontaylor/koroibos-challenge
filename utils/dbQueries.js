@@ -1,4 +1,6 @@
 const DB = require('./dbConnect')
+const { withGraphJoined } = require('objection')
+const Sport = require('../models/sport')
 
 async function olympianIndex(params) {
   try {
@@ -41,6 +43,24 @@ async function olympianStats() {
   }
 }
 
+async function sportEvents() {
+  try {
+    let result = await Sport.query()
+      .withGraphJoined('events(onlyEventName)')
+      .select('sport', 'events')
+      .then(events => events.map(obj => {
+        return {
+          sport: obj.sport,
+          events: obj.events.map(e => e.event).sort()
+        }
+      }));
+
+    return { events: result };
+  } catch(err) {
+    console.log(err)
+  }
+}
+
 async function _countAthletes() {
   let result = await DB('athletes').count('*')
   return parseInt(result[0].count)
@@ -77,5 +97,6 @@ function _addToQuery(params) {
 
 module.exports = {
   olympianIndex: olympianIndex,
-  olympianStats: olympianStats
+  olympianStats: olympianStats,
+  sportEvents: sportEvents
 }

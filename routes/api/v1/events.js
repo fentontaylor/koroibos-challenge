@@ -2,11 +2,11 @@ var express = require('express');
 var router = express.Router();
 
 const DB = require('../../../utils/dbConnect');
-const { olympianIndex } = require('../../../utils/dbQueries');
+const { sportEvents } = require('../../../utils/dbQueries');
 
 router.get('/', (request, response) => {
-  olympianIndex(request.query)
-    .then((dbResult) => response.status(200).send({ olympians: dbResult }))
+  sportEvents()
+    .then((result) => response.status(200).send(result))
     .catch((error) => response.status(500).send(error))
 });
 
