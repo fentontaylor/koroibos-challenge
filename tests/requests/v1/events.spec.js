@@ -25,15 +25,15 @@ describe('GET /api/v1/events', () => {
         {
           sport: 'Athletics',
           events: [
-            'Athletics Men\'s Pole Vault',
-            'Athletics Women\'s Marathon'
+            'Athletics Women\'s Marathon',
+            'Athletics Men\'s Pole Vault'
           ]
         },
         {
           sport: 'Gymnastics',
           events: [
-            'Gymnastics Men\'s Rings',
-            'Gymnastics Women\'s Balance Beam'
+            'Gymnastics Women\'s Balance Beam',
+            'Gymnastics Men\'s Rings'
           ]
         }
       ]
@@ -43,8 +43,8 @@ describe('GET /api/v1/events', () => {
 
     expect(response.status).toBe(200);
     expect(response.body).toHaveProperty('events')
-    expect(response.body.events).toHaveProperty('sport')
-    expect(response.body.events).toHaveProperty('events')
-    // expect(response.body).toEqual(expected);
+    expect(response.body.events[0]).toHaveProperty('sport')
+    expect(response.body.events[0]).toHaveProperty('events')
+    expect(response.body).toEqual(expected);
   })
 })
