@@ -20,6 +20,14 @@ class Event extends Model {
       }
     }
   }
+
+  static get modifiers() {
+    return {
+      onlyEventName(builder) {
+        builder.select('event')
+      }
+    }
+  }
 }
 
 module.exports = Event;
