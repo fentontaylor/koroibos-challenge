@@ -51,7 +51,7 @@ async function sportEvents() {
       .then(events => events.map(obj => {
         return {
           sport: obj.sport,
-          events: obj.events.map(e => e.event).sort()
+          events: obj.events.map(e => e.event)
         }
       }));
 
