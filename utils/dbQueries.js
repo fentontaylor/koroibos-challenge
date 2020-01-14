@@ -28,7 +28,14 @@ async function olympianStats() {
   try {
     let numAthletes = await _countAthletes();
     let averageAge = await _averageAge();
-    console.log('AVG AGE:', averageAge)
+    let averageWeights = await _averageWeights();
+    return {
+      olympian_stats: {
+        total_competing_olympians: numAthletes,
+        average_age: averageAge,
+        average_weight: averageWeights
+      }
+    }
   } catch(err) {
     console.log(err)
   }
@@ -36,12 +43,26 @@ async function olympianStats() {
 
 async function _countAthletes() {
   let result = await DB('athletes').count('*')
-  return result[0].count
+  return parseInt(result[0].count)
 }
 
 async function _averageAge() {
-  var result = await DB.raw('SELECT CAST(ROUND(AVG(age), 2) as float) FROM athletes')
+  let result = await DB.raw('SELECT CAST(ROUND(AVG(age), 2) AS float) FROM athletes')
   return result.rows[0].round
+}
+
+async function _averageWeights() {
+  let result = await DB.raw(
+    "SELECT sex, " +
+      "CAST(ROUND(AVG(weight), 2) AS float) as avg_weight " +
+	    "FROM athletes " +
+      "GROUP BY sex " +
+      "ORDER BY sex")
+  return {
+    unit: 'kg',
+    female_olympians: result.rows[0].avg_weight,
+    male_olympians: result.rows[1].avg_weight,
+  }
 }
 
 function _addToQuery(params) {
