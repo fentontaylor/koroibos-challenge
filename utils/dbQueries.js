@@ -70,6 +70,7 @@ async function eventMedalists(eventId) {
       .join('athlete_events', {'athlete_events.event_id': 'events.id'})
       .join('athletes', {'athlete_events.athlete_id': 'athletes.id'})
       .where('events.id', eventId)
+      .whereNotNull('athlete_events.medal')
       .select('name', 'team', 'age', 'medal')
       .orderByRaw(
         "CASE WHEN medal = 'Gold' THEN '1' " +
