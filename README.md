@@ -234,7 +234,7 @@ Status: 200
 
   
 ## Schema <a name="schema"></a>
-![image](https://user-images.githubusercontent.com/18686466/72321812-111c8c80-3662-11ea-8ee7-b978c5c737d4.png)
+![image](https://user-images.githubusercontent.com/18686466/72352293-3bd90600-369f-11ea-9c8b-cdb878948efc.png)
   
 ## Tech Stack <a name="tech-stack"></a>
 The API is built in [Node.js](https://nodejs.org/en/) using the [Express.js](https://expressjs.com/) framework and [Knex.js](http://knexjs.org/) as the ORM to connect to the [Postgresql](https://www.postgresql.org/) database. The testing suite is built with [Jest](https://jestjs.io/). The app is deployed to [Heroku](https://www.heroku.com/).
