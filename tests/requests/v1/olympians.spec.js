@@ -13,7 +13,7 @@ const {
 } = require('../../../utils/dbHelpers');
 
 
-describe('GET /api/v1/olympians', ()=>{
+describe('GET /api/v1/olympians', () => {
   beforeEach(async () => {
     await destroyAll();
     data = [
