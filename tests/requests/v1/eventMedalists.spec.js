@@ -10,24 +10,24 @@ const {
   destroyAll
 } = require('../../../utils/dbHelpers');
 
-describe('GET /api/v1/olympian_stats', () => {
+describe('GET /api/v1/events/:id/medalists', () => {
   beforeEach(async () => {
     await destroyAll();
     let data = [
       {
-        Name: 'Ciara Everard',
-        Sex: 'F',
+        Name: 'Mark Hamill',
+        Sex: 'M',
         Age: '26',
         Height: '169',
         Weight: '54',
-        Team: 'Ireland',
+        Team: 'USA',
         Games: '2016 Summer',
-        Sport: 'Athletics',
-        Event: 'Athletics Women\'s 800 metres',
+        Sport: 'Diving',
+        Event: 'Diving Men\'s Platform',
         Medal: 'Bronze'
       },
       {
-        Name: 'Joe Bob',
+        Name: 'Harrison Ford',
         Sex: 'M',
         Age: '30',
         Height: '155',
@@ -36,37 +36,37 @@ describe('GET /api/v1/olympian_stats', () => {
         Games: '2016 Summer',
         Sport: 'Diving',
         Event: 'Diving Men\'s Platform',
-        Medal: 'NA'
+        Medal: 'Silver'
       },
       {
-        Name: 'Sruthi Singh',
-        Sex: 'F',
+        Name: 'Steven Seagal',
+        Sex: 'M',
         Age: '23',
         Height: '169',
         Weight: '45',
-        Team: 'India',
-        Games: '2016 Summer',
-        Sport: 'Athletics',
-        Event: 'Athletics Women\'s 800 metres',
-        Medal: 'Gold'
-      },
-      {
-        Name: 'Maha Abdalsalam',
-        Sex: 'M',
-        Age: '20',
-        Height: '155',
-        Weight: '60',
-        Team: 'Egypt',
+        Team: 'USA',
         Games: '2016 Summer',
         Sport: 'Diving',
         Event: 'Diving Men\'s Platform',
-        Medal: 'NA'
+        Medal: 'Gold'
+      },
+      {
+        Name: 'Jennifer Lawrence',
+        Sex: 'F',
+        Age: '20',
+        Height: '155',
+        Weight: '60',
+        Team: 'USA',
+        Games: '2016 Summer',
+        Sport: 'Archery',
+        Event: 'Archery Women\'s Individual',
+        Medal: 'Gold'
       }
     ]
     let athlete = await createAthlete(data[0]);
     let olympics = await createOlympics(data[0]);
     let sport = await createSport(data[0]);
-    let event = await createEvent(data[0], sport);
+    event = await createEvent(data[0], sport);
     await createAthleteEvent(data[0], athlete, event, olympics);
 
     let athlete2 = await createAthlete(data[1]);
@@ -94,18 +94,30 @@ describe('GET /api/v1/olympian_stats', () => {
 
   it('return number of athletes, average weight by sex, average age', async () => {
     let expected = {
-      "olympian_stats": {
-        "total_competing_olympians": 4,
-        "average_age": 24.75,
-        "average_weight": {
-          "unit": "kg",
-          "male_olympians": 65,
-          "female_olympians": 49.5
+      event: 'Diving Men\'s Platform',
+      medalists: [
+        {
+          name: 'Steven Seagal',
+          team: 'USA',
+          age: 23,
+          medal: 'Gold'
+        },
+        {
+          name: 'Harrison Ford',
+          team: 'USA',
+          age: 30,
+          medal: 'Silver'
+        },
+        {
+          name: 'Mark Hamill',
+          team: 'USA',
+          age: 26,
+          medal: 'Bronze'
         }
-      }
+      ]
     }
 
-    let response = await request(app).get('/api/v1/olympian_stats')
+    let response = await request(app).get(`/api/v1/events/${event.id}/medalists`)
 
     expect(response.status).toBe(200)
     expect(response.body).toEqual(expected)
