@@ -51,16 +51,16 @@ describe('GET /api/v1/events/:id/medalists', () => {
         Medal: 'Gold'
       },
       {
-        Name: 'Jennifer Lawrence',
-        Sex: 'F',
+        Name: 'Tom Hardy',
+        Sex: 'M',
         Age: '20',
         Height: '155',
         Weight: '60',
         Team: 'USA',
         Games: '2016 Summer',
-        Sport: 'Archery',
-        Event: 'Archery Women\'s Individual',
-        Medal: 'Gold'
+        Sport: 'Diving',
+        Event: 'Diving Men\'s Platform',
+        Medal: 'NA'
       }
     ]
   });
