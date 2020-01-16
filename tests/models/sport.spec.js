@@ -1,4 +1,4 @@
-const Sport = require('../../models/sports')
+const Sport = require('../../models/sport')
 const { destroyAll } = require('../../utils/dbHelpers')
 const DB = require('../../utils/dbConnect')
 
@@ -12,7 +12,7 @@ describe('Sport Model', () => {
   })
 
   it('has a tableName', () => {
-    expect(Sports.tableName).toBe('sports')
+    expect(Sport.tableName).toBe('sports')
   })
 
   it('can findOrCreate from a row of data', async () => {
@@ -32,13 +32,13 @@ describe('Sport Model', () => {
     // This should create the sports record since it does not exist
     let sports = await Sport.findOrCreate(data);
 
-    expect(sports.games).toBe(data.games);
+    expect(sports.sport).toBe(data.sport);
 
     let result = await DB('sports');
     expect(sports).toEqual(result[0]);
     expect(result.length).toBe(1);
 
-    // This should find the athlete since she already exists
+    // This should find the sport since it already exists
     let olympics2 = await Sport.findOrCreate(data);
 
     let result2 = await DB('sports');
