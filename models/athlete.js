@@ -7,7 +7,7 @@ class Athlete extends Model {
     return 'athletes'
   }
 
-  static findOrCreateWith(data) {
+  static async findOrCreate(data) {
     let athleteData = {
       name:   data.name,
       team:   data.team,
@@ -15,8 +15,12 @@ class Athlete extends Model {
       height: data.height,
       weight: data.weight,
       age:    data.age
-    };
-    return this.query().insertAndFetch(athleteData);
+    }
+    var result = await this.query().where(athleteData);
+    if (result.length === 0) {
+      return await this.query().insertAndFetch(athleteData);
+    }
+    return result[0];
   }
 }
 
