@@ -16,7 +16,7 @@ describe('Athlete Model', () => {
     expect(athlete).toBeInstanceOf(Athlete);
   })
 
-  it('has a null tableName', () => {
+  it('has a tableName', () => {
     expect(Athlete.tableName).toBe('athletes');
   })
 
@@ -35,6 +35,13 @@ describe('Athlete Model', () => {
     }
     // This should create the athlete since she does not exist
     let athlete = await Athlete.findOrCreate(data);
+
+    expect(athlete.name).toBe(data.name);
+    expect(athlete.team).toBe(data.team);
+    expect(athlete.sex).toBe(data.sex);
+    expect(athlete.height).toBe(data.height);
+    expect(athlete.weight).toBe(data.weight);
+    expect(athlete.age).toBe(data.age);
 
     let result = await DB('athletes');
     expect(athlete).toEqual(result[0]);
