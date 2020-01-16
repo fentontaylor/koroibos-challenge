@@ -38,7 +38,7 @@ describe('Olympics Model', () => {
     expect(olympics).toEqual(result[0]);
     expect(result.length).toBe(1);
 
-    // This should find the athlete since she already exists
+    // This should find the olympics since it already exists
     let olympics2 = await Olympics.findOrCreate(data);
 
     let result2 = await DB('olympics');
