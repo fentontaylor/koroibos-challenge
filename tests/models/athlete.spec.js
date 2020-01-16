@@ -20,8 +20,8 @@ describe('Athlete Model', () => {
     expect(Athlete.tableName).toBe('athletes');
   })
 
-  it('can create a new athlete from a row of data', async () => {
-    let athlete = await Athlete.findOrCreateWith({
+  it('can findOrCreate a new athlete from a row of data', async () => {
+    let data = {
       name: 'Katniss Everdeen',
       team: 'USA',
       sex: 'F',
@@ -32,8 +32,19 @@ describe('Athlete Model', () => {
       sport: 'Archery',
       event: 'Archery Women\'s Individual',
       medal: 'Gold'
-    })
-    let result = await DB('athletes')
-    expect(athlete).toEqual(result[0])
+    }
+    // This should create the athlete since she does not exist
+    let athlete = await Athlete.findOrCreate(data);
+
+    let result = await DB('athletes');
+    expect(athlete).toEqual(result[0]);
+    expect(result.length).toBe(1);
+
+    // This should find the athlete since she already exists
+    let athlete2 = await Athlete.findOrCreate(data);
+
+    let result2 = await DB('athletes');
+    expect(athlete2).toEqual(result2[0]);
+    expect(result2.length).toBe(1);
   })
 })
