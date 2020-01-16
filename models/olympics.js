@@ -4,7 +4,7 @@ Model.knex(DB);
 
 class Olympics extends Model {
   static get tableName() {
-    return 'olympics'
+    return 'olympics';
   }
 
   static async findOrCreate(data) {
