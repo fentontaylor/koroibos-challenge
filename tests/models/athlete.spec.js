@@ -1,4 +1,4 @@
-const Athlete = require('../../models')
+const Athlete = require('../../models/athlete')
 
 describe('Athlete Model', () => {
   it('can initialize', () => {
@@ -7,6 +7,6 @@ describe('Athlete Model', () => {
   })
 
   it('has a null tableName', () => {
-    expect(BaseModel.tableName).toBe('athletes');
+    expect(Athlete.tableName).toBe('athletes');
   })
 })
