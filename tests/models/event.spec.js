@@ -48,4 +48,12 @@ describe ('Event Model', () => {
     expect(event2).toEqual(result2[0]);
     expect(result2.length).toBe(1);
   })
+
+  describe('relationships', () => {
+    it('belongs to one sport', () => {
+      expect(Event.relationMappings).toHaveProperty('sport');
+      expect(Event.relationMappings.sport.join)
+        .toEqual({ from: 'events.sport_id', to: 'sports.id' });
+    })
+  })
 })

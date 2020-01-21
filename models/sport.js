@@ -1,10 +1,24 @@
 const { Model } = require('objection');
 const DB = require('../utils/dbConnect');
+const Event = require('./event');
 Model.knex(DB);
 
 class Sport extends Model {
   static get tableName() {
     return 'sports';
+  }
+
+  static get relationMappings() {
+    return {
+      events: {
+        relation: Model.HasManyRelation,
+        modelClass: Event,
+        join: {
+          from: 'sports.id',
+          to: 'events.sport_id'
+        }
+      }
+    }
   }
 
   static async findOrCreate(data) {
