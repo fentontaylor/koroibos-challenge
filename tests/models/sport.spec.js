@@ -1,6 +1,6 @@
-const Sport = require('../../models/sport')
-const { destroyAll } = require('../../utils/dbHelpers')
-const DB = require('../../utils/dbConnect')
+const Sport = require('../../models/sport');
+const { destroyAll } = require('../../utils/dbHelpers');
+const DB = require('../../utils/dbConnect');
 
 describe('Sport Model', () => {
   beforeEach(async () => {
