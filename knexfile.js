@@ -4,7 +4,7 @@ module.exports = {
 
   development: {
     client: 'pg',
-    connection: 'postgres://localhost/koroibos_dev',
+    connection: 'postgres://localhost/olympians_dev',
     migrations: {
       directory: './db/migrations'
     },
@@ -15,7 +15,7 @@ module.exports = {
   },
   test: {
     client: 'pg',
-    connection: 'postgres://localhost/koroibos_test',
+    connection: 'postgres://localhost/olympians_test',
     migrations: {
       directory: './db/migrations'
     },
