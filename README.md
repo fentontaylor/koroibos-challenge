@@ -16,7 +16,7 @@ This project is an API built in Node.js using Express to explore sample data fro
 ## Initial Setup <a name="setup"></a>
 1. Clone the repo
 ```
-$ git clone git@github.com:fentontaylor/koroibos-challenge.git
+$ git clone git@github.com:fentontaylor/olympians-express.git
 ```
 
 2. Install dependencies
@@ -26,12 +26,15 @@ $ npm install
 
 3. Create your databases. You will already need [Postgres](https://www.postgresql.org/) installed.
 ```
-$ createdb koroibos_dev && createdb koroibos_test
+$ createdb olympians_dev && createdb olympians_test
+$ knex migrate:latest
+$ knex migrate:latest --env=test
 ```
 
 4. Seed the database
 ```
 $ node utils/seeder.js
+### Press control + C when it's finished
 ```
   
 ## How to Use <a name="how-to"></a>
