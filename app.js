@@ -21,4 +21,13 @@ app.use('/api/v1/olympians', olympiansRouter);
 app.use('/api/v1/olympian_stats', statsRouter);
 app.use('/api/v1/events', eventsRouter);
 
+
+const graphqlHTTP = require('express-graphql');
+const schema = require('./lib/schema/schema');
+
+app.use('/graphql-olympians', graphqlHTTP({
+  schema: schema,
+  graphiql: true
+}))
+
 module.exports = app;
