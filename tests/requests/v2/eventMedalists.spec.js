@@ -10,7 +10,7 @@ const {
   destroyAll
 } = require('../../../utils/dbHelpers');
 
-describe('GET /api/v1/events/:id/medalists', () => {
+describe('GET /api/v2/graphql-olympians event_medalists', () => {
   beforeEach(async () => {
     await destroyAll();
     data = [
@@ -95,29 +95,34 @@ describe('GET /api/v1/events/:id/medalists', () => {
     await createAthleteEvent(data[3], athlete4, event4, olympics4);
 
     let expected = {
-      event: 'Diving Men\'s Platform',
-      medalists: [
-        {
-          name: 'Steven Seagal',
-          team: 'USA',
-          age: 23,
-          medal: 'Gold'
-        },
-        {
-          name: 'Harrison Ford',
-          team: 'USA',
-          age: 30,
-          medal: 'Silver'
-        },
-        {
-          name: 'Mark Hamill',
-          team: 'USA',
-          age: 26,
-          medal: 'Bronze'
+      data: {
+        event_medalists: {
+          event: 'Diving Men\'s Platform',
+          medalists: [
+            {
+              name: 'Steven Seagal',
+              team: 'USA',
+              age: 23,
+              medal: 'Gold'
+            },
+            {
+              name: 'Harrison Ford',
+              team: 'USA',
+              age: 30,
+              medal: 'Silver'
+            },
+            {
+              name: 'Mark Hamill',
+              team: 'USA',
+              age: 26,
+              medal: 'Bronze'
+            }
+          ]
         }
-      ]
+      }
     }
-    let response = await request(app).get(`/api/v1/events/${event.id}/medalists`)
+    let query = `query{event_medalists(id: ${event.id}){event medalists}}`
+    let response = await request(app).get(`/api/v2/graphql-olympians?query=${query}`)
 
     expect(response.status).toBe(200)
     expect(response.body).toEqual(expected)
