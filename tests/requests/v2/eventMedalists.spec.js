@@ -121,7 +121,7 @@ describe('GET /api/v2/graphql-olympians event_medalists', () => {
         }
       }
     }
-    let query = `query{event_medalists(id: ${event.id}){event medalists}}`
+    let query = `query{event_medalists(id: ${event.id}){event medalists{name team age medal}}}`
     let response = await request(app).get(`/api/v2/graphql-olympians?query=${query}`)
 
     expect(response.status).toBe(200)
