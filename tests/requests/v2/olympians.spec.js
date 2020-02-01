@@ -12,7 +12,7 @@ const {
 } = require('../../../utils/dbHelpers');
 
 
-describe('GET /api/v1/olympians', () => {
+describe('GET /api/v2/graphql-olympians', () => {
   beforeEach(async () => {
     await destroyAll();
     data = [
@@ -59,46 +59,52 @@ describe('GET /api/v1/olympians', () => {
   });
 
   it('can get all olympians with their total medals won', async () => {
-    let expected = {
-      "olympians": [
-        {
-          "name": "Ciara Everard",
-          "team": "Ireland",
-          "age": 26,
-          "sport": "Athletics",
-          "total_medals_won": 1
-        },
-        {
-          "name": "Maha Abdalsalam",
-          "team": "Egypt",
-          "age": 20,
-          "sport": "Diving",
-          "total_medals_won": 0
-        }
-      ]
+    const expected = {"data": 
+      {
+        "olympians": [
+          {
+            "name": "Ciara Everard",
+            "team": "Ireland",
+            "age": 26,
+            "sport": "Athletics",
+            "total_medals_won": 1
+          },
+          {
+            "name": "Maha Abdalsalam",
+            "team": "Egypt",
+            "age": 20,
+            "sport": "Diving",
+            "total_medals_won": 0
+          }
+        ]
+      }
     }
-    var response = await request(app)
-      .get('/api/v1/olympians');
+    const query = 'query{olympians{ name team age  sport total_medals_won}}'
+    const response = await request(app)
+      .get(`/api/v2/graphql-olympians?query=${query}`);
 
     expect(response.status).toBe(200);
     expect(response.body).toEqual(expected);
   })
 
   it('can get the youngest olympian', async () => {
-    let expected = {
-      "olympians": [
-        {
-          "name": "Maha Abdalsalam",
-          "team": "Egypt",
-          "age": 20,
-          "sport": "Diving",
-          "total_medals_won": 0
-        }
-      ]
+    const expected = {
+      "data": {
+        "olympians": [
+          {
+            "name": "Maha Abdalsalam",
+            "team": "Egypt",
+            "age": 20,
+            "sport": "Diving",
+            "total_medals_won": 0
+          }
+        ]
+      }
     }
 
-    var response = await request(app)
-      .get('/api/v1/olympians?age=youngest');
+    const query = 'query{olympians(age: "youngest"){ name team age  sport total_medals_won}}'
+    const response = await request(app)
+      .get(`/api/v2/graphql-olympians?query=${query}`);
 
     expect(response.status).toBe(200);
     expect(response.body).toEqual(expected);
@@ -106,21 +112,24 @@ describe('GET /api/v1/olympians', () => {
 
   it('can get the oldest olympian', async () => {
     let expected = {
-      "olympians": [
-        {
-          "name": "Ciara Everard",
-          "team": "Ireland",
-          "age": 26,
-          "sport": "Athletics",
-          "total_medals_won": 1
-        }
-      ]
+      "data": {
+        "olympians": [
+          {
+            "name": "Ciara Everard",
+            "team": "Ireland",
+            "age": 26,
+            "sport": "Athletics",
+            "total_medals_won": 1
+          }
+        ]
+      }
     }
 
-    var response = await request(app)
-      .get('/api/v1/olympians?age=oldest');
+    const query = 'query{olympians(age: "oldest"){ name team age  sport total_medals_won}}'
+    const response = await request(app)
+      .get(`/api/v2/graphql-olympians?query=${query}`);
 
     expect(response.status).toBe(200);
     expect(response.body).toEqual(expected);
   })
-})
+});
