@@ -41,7 +41,7 @@ describe('GET /api/v2/graphql-olympians events index', () => {
       }
     }
 
-    const query = 'query{events{events}}'
+    const query = 'query{events{sport events}}'
     const response = await request(app).get(`/api/v2/graphql-olympians?query=${query}`);
 
     expect(response.status).toBe(200);
