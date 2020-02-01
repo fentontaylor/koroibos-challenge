@@ -23,10 +23,11 @@ app.use('/api/v1/events', eventsRouter);
 
 
 const graphqlHTTP = require('express-graphql');
-const schema = require('./lib/schema/schema');
+const { schema, root } = require('./lib/schema/schema');
 
 app.use('/api/v2/graphql-olympians', graphqlHTTP({
   schema: schema,
+  rootValue: root,
   graphiql: true
 }))
 
