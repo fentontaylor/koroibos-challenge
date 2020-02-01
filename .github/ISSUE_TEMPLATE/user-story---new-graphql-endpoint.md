@@ -2,7 +2,7 @@
 name: User Story - New GraphQL Endpoint
 about: New user story for GraphQL Endpoint
 title: 'New GraphQL Endpoint: '
-labels: ''
+labels: 'GraphQL Endpoint'
 assignees: fentontaylor
 
 ---
@@ -10,7 +10,7 @@ assignees: fentontaylor
 /api/v2/graphql-olympians
 
 ### Description
-As a user, I 
+As a user, I should be able to use graphql to
 
 ### Example Query
 ```
@@ -19,6 +19,7 @@ query {
     fields
   }
 }
+```
 
 ### Success Response
 ```
