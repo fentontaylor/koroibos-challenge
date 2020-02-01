@@ -55,7 +55,7 @@ async function sportEvents() {
         }
       }));
 
-    return { events: result };
+    return result;
   } catch(err) {
     console.log(err)
   }
