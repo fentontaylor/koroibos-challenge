@@ -73,67 +73,68 @@ http://localhost:3000/api/v1
 1. [GET /events/:id/medalists](#get-medalists)
 
 ### Endpoint: GET /olympians <a name="get-olympians"></a>
+<details>
+  <summary>View Details</summary>
+  #### Description
+  As a user, I should be able to send a GET request to /api/v1/olympians. A successful response will return a list of all Olympians in the database with their `name`, `team`, `age`, `sport`, and `total_medals_won`. I can enter optional query params to limit the search.
 
-#### Description
-As a user, I should be able to send a GET request to /api/v1/olympians. A successful response will return a list of all Olympians in the database with their `name`, `team`, `age`, `sport`, and `total_medals_won`. I can enter optional query params to limit the search.
+  | Param | Allowed Values |
+  |-------|----------------|
+  | `age` | youngest, oldest |
 
-| Param | Allowed Values |
-|-------|----------------|
-| `age` | youngest, oldest |
+  #### Example Request
+  ```
+  GET https://olympians.herokuapp.com/api/v1/olympians
+  ```
 
-#### Example Request
-```
-GET https://olympians.herokuapp.com/api/v1/olympians
-```
+  #### Success Response
+  ```
+  Status: 200
 
-#### Success Response
-```
-Status: 200
+  {
+    "olympians":
+      [
+        {
+          "name": "Maha Abdalsalam",
+          "team": "Egypt",
+          "age": 18,
+          "sport": "Diving"
+          "total_medals_won": 0
+        },
+        {
+          "name": "Ahmad Abughaush",
+          "team": "Jordan",
+          "age": 20,
+          "sport": "Taekwondo"
+          "total_medals_won": 1
+        },
+        {...}
+      ]
+  }
+  ```
 
-{
-  "olympians":
-    [
+  #### Example Request With Query Params
+  ```
+  GET https://olympians.herokuapp.com/api/v1/olympians?age=youngest
+  ```
+
+  #### Success Response
+  ```
+  Status: 200
+
+  {
+    "olympians": [
       {
-        "name": "Maha Abdalsalam",
-        "team": "Egypt",
-        "age": 18,
-        "sport": "Diving"
+        "name": "Ana Iulia Dascl",
+        "team": "Romania",
+        "age": 13,
+        "sport": "Swimming"
         "total_medals_won": 0
-      },
-      {
-        "name": "Ahmad Abughaush",
-        "team": "Jordan",
-        "age": 20,
-        "sport": "Taekwondo"
-        "total_medals_won": 1
-      },
-      {...}
+      }
     ]
-}
-```
-
-#### Example Request With Query Params
-```
-GET https://olympians.herokuapp.com/api/v1/olympians?age=youngest
-```
-
-#### Success Response
-```
-Status: 200
-
-{
-  "olympians": [
-    {
-      "name": "Ana Iulia Dascl",
-      "team": "Romania",
-      "age": 13,
-      "sport": "Swimming"
-      "total_medals_won": 0
-    }
-  ]
-}
-```
-
+  }
+  ```
+</details>
 ### Endpoint: GET /olympian_stats <a name="get-stats"></a>
 
 #### Description
