@@ -17,17 +17,17 @@ This project is an API built in Node.js using Express to explore sample data fro
 
 ## Initial Setup <a name="setup"></a>
 1. Clone the repo
-```
+```bash
 $ git clone git@github.com:fentontaylor/olympians-express.git
 ```
 
 2. Install dependencies
-```
+```bash
 $ npm install
 ```
 
 3. Create your databases. You will already need [Postgres](https://www.postgresql.org/) installed.
-```
+```bash
 $ createdb olympians_dev && createdb olympians_test
 $ knex migrate:latest
 $ knex migrate:latest --env=test
@@ -55,8 +55,8 @@ Mostly, the utils/dbSeed.js is dragging the coverage down. If you want to run th
 $ npm test
 ```
   
-## API Docs <a name="docs"></a>
-### V1: RESTful <a name="v1"></a>
+# API Docs <a name="docs"></a>
+## V1: RESTful <a name="v1"></a>
 Base url:
 ```
 Production:
@@ -89,7 +89,7 @@ http://localhost:3000/api/v1
   ```
 
   #### Success Response
-  ```
+  ```json
   Status: 200
 
   {
@@ -99,14 +99,14 @@ http://localhost:3000/api/v1
           "name": "Maha Abdalsalam",
           "team": "Egypt",
           "age": 18,
-          "sport": "Diving"
+          "sport": "Diving",
           "total_medals_won": 0
         },
         {
           "name": "Ahmad Abughaush",
           "team": "Jordan",
           "age": 20,
-          "sport": "Taekwondo"
+          "sport": "Taekwondo",
           "total_medals_won": 1
         },
         {...}
@@ -120,7 +120,7 @@ http://localhost:3000/api/v1
   ```
 
   #### Success Response
-  ```
+  ```json
   Status: 200
 
   {
@@ -129,7 +129,7 @@ http://localhost:3000/api/v1
         "name": "Ana Iulia Dascl",
         "team": "Romania",
         "age": 13,
-        "sport": "Swimming"
+        "sport": "Swimming",
         "total_medals_won": 0
       }
     ]
@@ -150,17 +150,17 @@ http://localhost:3000/api/v1
   ```
 
   #### Success Response
-  ```
+  ```json
   Status: 200
 
   {
       "olympian_stats": {
-        "total_competing_olympians": 3120
+        "total_competing_olympians": 3120,
         "average_weight:" {
           "unit": "kg",
           "male_olympians": 75.4,
           "female_olympians": 70.2
-        }
+        },
         "average_age:" 26.2
       }
     }
@@ -181,7 +181,7 @@ http://localhost:3000/api/v1
   ```
 
   #### Success Response
-  ```
+  ```json
   Status: 200
 
   {
@@ -217,7 +217,7 @@ http://localhost:3000/api/v1
   <summary>View Details</summary>
 
   #### Description
-  As a user, I should be able to send a request to GET /api/v1/events/:id/medalists. If I give a valid event_id, then I should get a response with the medalists `name`, `team`, `age`, and `medal`.
+  As a user, I should be able to send a request to GET /api/v1/events/:id/medalists. If I give a valid event_id, then I should get a response with `event` and the medalists' `name`, `team`, `age`, and `medal`.
 
   #### Example Request
   Note:
@@ -228,7 +228,7 @@ http://localhost:3000/api/v1
   ```
 
   #### Success Response
-  ```
+  ```json
   Status: 200
 
   {
@@ -251,7 +251,7 @@ http://localhost:3000/api/v1
   ```
 </details>
 
-### V2: GraphQL <a name="#v2"></a>
+## V2: GraphQL <a name="#v2"></a>
 Base url:
 ```
 Production:
@@ -261,19 +261,21 @@ Local:
 http://localhost:3000/api/v2/graphql-olympians?query=<query>
 ```
 
-GraphQL only uses a single endpoint and uses a structured query to get results. You can either use Postman or your browser to write the query directly as a query param or use the embedded API tool [GraphiQL](https://olympians.herokuapp.com/api/v2/graphql-olympians?query=query%20%7B%0A%20%20olympians%20%7B%0A%20%20%20%20name%0A%20%20%20%20age%0A%20%20%20%20sport%0A%20%20%20%20team%0A%20%20%20%20total_medals_won%0A%20%20%7D%0A%7D%0A) and construct the query on the page.
+GraphQL only uses a single endpoint and uses a structured query to get results. You can either use Postman or your browser to write the query directly as a query param or use the embedded API tool [GraphiQL](https://olympians.herokuapp.com/api/v2/graphql-olympians?query=query%20%7B%0A%20%20olympians%20%7B%0A%20%20%20%20name%0A%20%20%20%20age%0A%20%20%20%20sport%0A%20%20%20%20team%0A%20%20%20%20total_medals_won%0A%20%20%7D%0A%7D%0A) and construct the query on the page. You can select all of the attributes listed for each query, or as few as you'd like.
 
 ### Queries
 1. [olympians](#olympians)
 2. [olympian_stats](#olympian-stats)
 3. [events](#events)
-4. [event_medalists](#event_medalists)
+4. [event_medalists](#event-medalists)
 
 ### Query { Olympians } <a name="olympians"></a>
 <details>
  <summary>View Details</summary>
 
-  #### Description:
+  #### Description: 
+  As a user, I should be able to use GraphQL to query `olympians`. A successful response will return a list of all Olympians in the database with their `name`, `team`, `age`, `sport`, and `total_medals_won`. I can enter the optional query argument `age` with the value 'youngest' or 'oldest' to limit the search.
+
 
   #### Example Query:
   ```
@@ -299,7 +301,7 @@ GraphQL only uses a single endpoint and uses a structured query to get results. 
   ```
 
   #### Success Response
-  ```
+  ```json
   ### 1 ###
   {
     "data": {
@@ -342,6 +344,7 @@ GraphQL only uses a single endpoint and uses a structured query to get results. 
   <summary>View Details</summary>
 
   #### Description:
+  As a user, I should be able to use GraphQL to query `olympian_stats`. It should return the `total_competing_olympians`, the average weight in kg of `male_olympians` and `female_olympians`, and the `average_age` of all olympians.
 
   #### Example Query:
   ```
@@ -359,7 +362,7 @@ GraphQL only uses a single endpoint and uses a structured query to get results. 
   ```
 
   #### Success Response
-  ```
+  ```json
   {
     "data": {
       "olympian_stats": {
@@ -375,7 +378,89 @@ GraphQL only uses a single endpoint and uses a structured query to get results. 
   }
   ```
 </details>
-  
+
+### Query { Events } <a name="events"></a>
+<details>
+  <summary>View Details</summary>
+
+  #### Description: 
+  As a user, I should be able to use GraphQL to query `events`. It should return a list of each `sport` with a sub-list of each `event` associated with that sport.
+
+  #### Example Query:
+  ```
+
+  ```
+
+  #### Success Response:
+  ```json
+  {
+    "data": {
+      "events": [
+        {
+          "sport": "Archery",
+          "events": [
+            "Archery Men's Individual",
+            "Archery Men's Team",
+            "Archery Women's Individual",
+            "Archery Women's Team"
+          ]
+        },
+        {...},
+      ]
+    }
+  }
+  ```
+</details>
+
+### Query { EventMedalists } <a name="event-medalists"></a>
+<details>
+  <summary>View Details</summary>
+
+  #### Description:
+  As a user, I should be able to use GraphQL to query `event_medalists`. If I give a valid event_id, then I should get a response with the `event` and the medalists' `name`, `team`, `age`, and `medal`.
+
+  #### Example Query:
+  ```
+  query {
+    event_medalists(id: 10) {
+      event
+      medalists {
+        name
+        team
+        age
+        medal
+      }
+    }
+  }
+  ```
+
+  #### Success Response:
+  ```json
+  {
+    "data": {
+      "event_medalists": {
+        "event": "Taekwondo Women's Flyweight",
+        "medalists": [
+          {
+            "name": "Tijana Bogdanovi",
+            "team": "Serbia",
+            "age": 18,
+            "medal": "Silver"
+          },
+          {
+            "name": "Patimat Abakarova",
+            "team": "Azerbaijan",
+            "age": 21,
+            "medal": "Bronze"
+          }
+        ]
+      }
+    }
+  }
+  ```
+
+</details>
+
 ## Schema <a name="schema"></a>
 ![image](https://user-images.githubusercontent.com/18686466/72352293-3bd90600-369f-11ea-9c8b-cdb878948efc.png)
   
