@@ -48,9 +48,9 @@ Use [Postman](https://www.getpostman.com/) or your browser to send requests to t
 
 ## Tests <a name="tests"></a>
 Current test coverage:
-![image](https://user-images.githubusercontent.com/18686466/72322581-ecc1af80-3663-11ea-8d0b-1a96c128be3c.png)
+![image](https://user-images.githubusercontent.com/18686466/73612397-a8616980-45a8-11ea-8324-aeadbf1b6da9.png)
 
-Mostly, the utils/dbSeed.js is dragging the coverage down. If you want to run the tests:
+If you want to run the tests:
 ```
 $ npm test
 ```
@@ -251,7 +251,7 @@ http://localhost:3000/api/v1
   ```
 </details>
 
-## V2: GraphQL <a name="#v2"></a>
+## V2: GraphQL <a name="v2"></a>
 Base url:
 ```
 Production:
