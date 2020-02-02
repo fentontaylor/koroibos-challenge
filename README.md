@@ -135,6 +135,7 @@ http://localhost:3000/api/v1
   }
   ```
 </details>
+
 ### Endpoint: GET /olympian_stats <a name="get-stats"></a>
 
 #### Description
