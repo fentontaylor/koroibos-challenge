@@ -75,6 +75,7 @@ http://localhost:3000/api/v1
 ### Endpoint: GET /olympians <a name="get-olympians"></a>
 <details>
   <summary>View Details</summary>
+
   #### Description
   As a user, I should be able to send a GET request to /api/v1/olympians. A successful response will return a list of all Olympians in the database with their `name`, `team`, `age`, `sport`, and `total_medals_won`. I can enter optional query params to limit the search.
 
@@ -137,108 +138,118 @@ http://localhost:3000/api/v1
 </details>
 
 ### Endpoint: GET /olympian_stats <a name="get-stats"></a>
+<details>
+  <summary>View Details</summary>
 
-#### Description
-As a user, I should be able to visit GET /api/v1/olympian_stats. It should return the `total_competing_olympians`, the average weight in kg of `male_olympians` and `female_olympians`, and the `average_age` of all olympians.
+  #### Description
+  As a user, I should be able to visit GET /api/v1/olympian_stats. It should return the `total_competing_olympians`, the average weight in kg of `male_olympians` and `female_olympians`, and the `average_age` of all olympians.
 
-#### Example Request
-```
-GET https://olympians.herokuapp.com/api/v1/olympian_stats
-```
+  #### Example Request
+  ```
+  GET https://olympians.herokuapp.com/api/v1/olympian_stats
+  ```
 
-#### Success Response
-```
-Status: 200
+  #### Success Response
+  ```
+  Status: 200
 
-{
-    "olympian_stats": {
-      "total_competing_olympians": 3120
-      "average_weight:" {
-        "unit": "kg",
-        "male_olympians": 75.4,
-        "female_olympians": 70.2
+  {
+      "olympian_stats": {
+        "total_competing_olympians": 3120
+        "average_weight:" {
+          "unit": "kg",
+          "male_olympians": 75.4,
+          "female_olympians": 70.2
+        }
+        "average_age:" 26.2
       }
-      "average_age:" 26.2
     }
-  }
-```
+  ```
+</details>
 
 
 ### Endpoint: GET /events <a name="get-events"></a>
+<details>
+  <summary>View Details</summary>
 
-#### Description
-As a user, I should be able to send a request to GET api/v1/events. It should return a list of each `sport` with a sub-list of each `event` associated with that sport.
+  #### Description
+  As a user, I should be able to send a request to GET api/v1/events. It should return a list of each `sport` with a sub-list of each `event` associated with that sport.
 
-#### Example Request
-```
-GET https://olympians.herokuapp.com/api/v1/events
-```
+  #### Example Request
+  ```
+  GET https://olympians.herokuapp.com/api/v1/events
+  ```
 
-#### Success Response
-```
-Status: 200
+  #### Success Response
+  ```
+  Status: 200
 
-{
-  "events":
-    [
-      {
-        "sport": "Archery",
-        "events": [
-          "Archery Men's Individual",
-          "Archery Men's Team",
-          "Archery Women's Individual",
-          "Archery Women's Team"
-        ]
-      },
-      {
-        "sport": "Badminton",
-        "events": [
-          "Badminton Men's Doubles",
-          "Badminton Men's Singles",
-          "Badminton Women's Doubles",
-          "Badminton Women's Singles",
-          "Badminton Mixed Doubles"
-        ]
-      },
-      {...}
-    ]
-}
-```
+  {
+    "events":
+      [
+        {
+          "sport": "Archery",
+          "events": [
+            "Archery Men's Individual",
+            "Archery Men's Team",
+            "Archery Women's Individual",
+            "Archery Women's Team"
+          ]
+        },
+        {
+          "sport": "Badminton",
+          "events": [
+            "Badminton Men's Doubles",
+            "Badminton Men's Singles",
+            "Badminton Women's Doubles",
+            "Badminton Women's Singles",
+            "Badminton Mixed Doubles"
+          ]
+        },
+        {...}
+      ]
+  }
+  ```
+</details>
 
 ### Endpoint: GET /events/:id/medalists <a name="get-medalists"></a>
-#### Description
-As a user, I should be able to send a request to GET /api/v1/events/:id/medalists. If I give a valid event_id, then I should get a response with the medalists `name`, `team`, `age`, and `medal`.
+<details>
+  <summary>View Details</summary>
 
-#### Example Request
-Note:
-- Assume that "Badminton Mixed Doubles" has event id: 2
-- This is sample data and it is incomplete. You may not have all medalists for a particular event.
-```
-GET https://olympians.herokuapp.com/api/v1/events/2/medalists
-```
+  #### Description
+  As a user, I should be able to send a request to GET /api/v1/events/:id/medalists. If I give a valid event_id, then I should get a response with the medalists `name`, `team`, `age`, and `medal`.
 
-#### Success Response
-```
-Status: 200
+  #### Example Request
+  Note:
+  - Assume that "Badminton Mixed Doubles" has event id: 2
+  - This is sample data and it is incomplete. You may not have all medalists for a particular event.
+  ```
+  GET https://olympians.herokuapp.com/api/v1/events/2/medalists
+  ```
 
-{
-  "event": "Badminton Mixed Doubles",
-  "medalists": [
-      {
-        "name": "Tontowi Ahmad",
-        "team": "Indonesia-1",
-        "age": 29,
-        "medal": "Gold"
-      },
-      {
-        "name": "Chan Peng Soon",
-        "team": "Malaysia",
-        "age": 28,
-        "medal": "Silver"
-      }
-    ]
-}
-```
+  #### Success Response
+  ```
+  Status: 200
+
+  {
+    "event": "Badminton Mixed Doubles",
+    "medalists": [
+        {
+          "name": "Tontowi Ahmad",
+          "team": "Indonesia-1",
+          "age": 29,
+          "medal": "Gold"
+        },
+        {
+          "name": "Chan Peng Soon",
+          "team": "Malaysia",
+          "age": 28,
+          "medal": "Silver"
+        }
+      ]
+  }
+  ```
+</details>
 
 ### V2: GraphQL <a name="#v2"></a>
 Base url:
@@ -259,103 +270,111 @@ GraphQL only uses a single endpoint and uses a structured query to get results. 
 4. [event_medalists](#event_medalists)
 
 ### Query { Olympians } <a name="olympians"></a>
-#### Description:
+<details>
+ <summary>View Details</summary>
 
-#### Example Query:
-```
-### 1 ###
-query {
-  olympians {
-    name
-    age
-    sport
-    team
-    total_medals_won
-  }
-}
+  #### Description:
 
-### 2 ###
-# age can be 'youngest' or 'oldest'
-query {
-  olympians(age: "youngest") {
-    name
-    age
+  #### Example Query:
+  ```
+  ### 1 ###
+  query {
+    olympians {
+      name
+      age
+      sport
+      team
+      total_medals_won
+    }
   }
-}
-```
 
-#### Success Response
-```
-### 1 ###
-{
-  "data": {
-    "olympians": [
-      {
-        "name": "Brady Lee Ellison",
-        "age": 27,
-        "sport": "Archery",
-        "team": "United States",
-        "total_medals_won": 2
-      },
-      {
-        "name": "Chang Hye-Jin",
-        "age": 29,
-        "sport": "Archery",
-        "team": "South Korea",
-        "total_medals_won": 2
-      },
-      {...},
-    ]
+  ### 2 ###
+  # age can be 'youngest' or 'oldest'
+  query {
+    olympians(age: "youngest") {
+      name
+      age
+    }
   }
-}
+  ```
 
-### 2 ###
-{
-  "data": {
-    "olympians": [
-      {
-        "name": "Ana Iulia Dascl",
-        "age": 13
-      }
-    ]
+  #### Success Response
+  ```
+  ### 1 ###
+  {
+    "data": {
+      "olympians": [
+        {
+          "name": "Brady Lee Ellison",
+          "age": 27,
+          "sport": "Archery",
+          "team": "United States",
+          "total_medals_won": 2
+        },
+        {
+          "name": "Chang Hye-Jin",
+          "age": 29,
+          "sport": "Archery",
+          "team": "South Korea",
+          "total_medals_won": 2
+        },
+        {...},
+      ]
+    }
   }
-}
-```
+
+  ### 2 ###
+  {
+    "data": {
+      "olympians": [
+        {
+          "name": "Ana Iulia Dascl",
+          "age": 13
+        }
+      ]
+    }
+  }
+  ```
+</details>
 
 ### Query { OlympianStats } <a name="olympian-stats"></a>
-#### Description:
+<details>
+  <summary>View Details</summary>
 
-#### Example Query:
-```
-query {
-  olympian_stats {
-    total_competing_olympians
-    average_age
-    average_weight {
-      unit
-      male_olympians
-      female_olympians
-    }
-  }
-}
-```
+  #### Description:
 
-#### Success Response
-```
-{
-  "data": {
-    "olympian_stats": {
-      "total_competing_olympians": 2856,
-      "average_age": 26.37,
-      "average_weight": {
-        "unit": "kg",
-        "male_olympians": 79.4,
-        "female_olympians": 62.69
+  #### Example Query:
+  ```
+  query {
+    olympian_stats {
+      total_competing_olympians
+      average_age
+      average_weight {
+        unit
+        male_olympians
+        female_olympians
       }
     }
   }
-}
-```
+  ```
+
+  #### Success Response
+  ```
+  {
+    "data": {
+      "olympian_stats": {
+        "total_competing_olympians": 2856,
+        "average_age": 26.37,
+        "average_weight": {
+          "unit": "kg",
+          "male_olympians": 79.4,
+          "female_olympians": 62.69
+        }
+      }
+    }
+  }
+  ```
+</details>
   
 ## Schema <a name="schema"></a>
 ![image](https://user-images.githubusercontent.com/18686466/72352293-3bd90600-369f-11ea-9c8b-cdb878948efc.png)
