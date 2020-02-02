@@ -1,14 +1,16 @@
-# koroibos-challenge
+# Olympians Express
 [![Build Status](https://travis-ci.com/fentontaylor/koroibos-challenge.svg?branch=master)](https://travis-ci.com/fentontaylor/koroibos-challenge)
 
 ## Introduction
-This project is an API built in Node.js using Express to explore sample data from the 2016 Summer Olympics.
+This project is an API built in Node.js using Express to explore sample data from the 2016 Summer Olympics. It includes v1 (RESTful) and v2 (GraphQL) of the API.
 
 ## Table of Contents
 1. [Initial Setup](#setup)
 1. [How to Use](#how-to)
 1. [Tests](#tests)
 1. [API Docs](#docs)
+    - [V1: RESTful](#v1)
+    - [V2: GraphQL](#v2)
 1. [Schema](#schema)
 1. [Tech Stack](#tech-stack)
 1. [Contributors](#contributors)
@@ -54,6 +56,7 @@ $ npm test
 ```
   
 ## API Docs <a name="docs"></a>
+### V1: RESTful <a name="v1"></a>
 Base url:
 ```
 Production:
@@ -235,6 +238,122 @@ Status: 200
 }
 ```
 
+### V2: GraphQL <a name="#v2"></a>
+Base url:
+```
+Production:
+https://olympians.herokuapp.com/api/v2/graphql-olympians?query=<query>
+
+Local:
+http://localhost:3000/api/v2/graphql-olympians?query=<query>
+```
+
+GraphQL only uses a single endpoint and uses a structured query to get results. You can either use Postman or your browser to write the query directly as a query param or use the embedded API tool [GraphiQL](https://olympians.herokuapp.com/api/v2/graphql-olympians?query=query%20%7B%0A%20%20olympians%20%7B%0A%20%20%20%20name%0A%20%20%20%20age%0A%20%20%20%20sport%0A%20%20%20%20team%0A%20%20%20%20total_medals_won%0A%20%20%7D%0A%7D%0A) and construct the query on the page.
+
+### Queries
+1. [olympians](#olympians)
+2. [olympian_stats](#olympian-stats)
+3. [events](#events)
+4. [event_medalists](#event_medalists)
+
+### Query { Olympians } <a name="olympians"></a>
+#### Description:
+
+#### Example Query:
+```
+### 1 ###
+query {
+  olympians {
+    name
+    age
+    sport
+    team
+    total_medals_won
+  }
+}
+
+### 2 ###
+# age can be 'youngest' or 'oldest'
+query {
+  olympians(age: "youngest") {
+    name
+    age
+  }
+}
+```
+
+#### Success Response
+```
+### 1 ###
+{
+  "data": {
+    "olympians": [
+      {
+        "name": "Brady Lee Ellison",
+        "age": 27,
+        "sport": "Archery",
+        "team": "United States",
+        "total_medals_won": 2
+      },
+      {
+        "name": "Chang Hye-Jin",
+        "age": 29,
+        "sport": "Archery",
+        "team": "South Korea",
+        "total_medals_won": 2
+      },
+      {...},
+    ]
+  }
+}
+
+### 2 ###
+{
+  "data": {
+    "olympians": [
+      {
+        "name": "Ana Iulia Dascl",
+        "age": 13
+      }
+    ]
+  }
+}
+```
+
+### Query { OlympianStats } <a name="olympian-stats"></a>
+#### Description:
+
+#### Example Query:
+```
+query {
+  olympian_stats {
+    total_competing_olympians
+    average_age
+    average_weight {
+      unit
+      male_olympians
+      female_olympians
+    }
+  }
+}
+```
+
+#### Success Response
+```
+{
+  "data": {
+    "olympian_stats": {
+      "total_competing_olympians": 2856,
+      "average_age": 26.37,
+      "average_weight": {
+        "unit": "kg",
+        "male_olympians": 79.4,
+        "female_olympians": 62.69
+      }
+    }
+  }
+}
+```
   
 ## Schema <a name="schema"></a>
 ![image](https://user-images.githubusercontent.com/18686466/72352293-3bd90600-369f-11ea-9c8b-cdb878948efc.png)
