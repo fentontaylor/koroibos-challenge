@@ -7,7 +7,7 @@ const {
 
 router.get('/', (request, response) => {
   sportEvents()
-    .then((result) => response.status(200).send(result))
+    .then((result) => response.status(200).send({ events: result }))
     .catch((error) => response.status(500).send(error))
 });
 

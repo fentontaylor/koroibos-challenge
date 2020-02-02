@@ -10,24 +10,24 @@ const {
   destroyAll
 } = require('../../../utils/dbHelpers');
 
-describe('GET /api/v1/events/:id/medalists', () => {
+describe('GET /api/v2/graphql-olympians olympian_stats', () => {
   beforeEach(async () => {
     await destroyAll();
-    data = [
+    let data = [
       {
-        Name: 'Mark Hamill',
-        Sex: 'M',
+        Name: 'Ciara Everard',
+        Sex: 'F',
         Age: '26',
         Height: '169',
         Weight: '54',
-        Team: 'USA',
+        Team: 'Ireland',
         Games: '2016 Summer',
-        Sport: 'Diving',
-        Event: 'Diving Men\'s Platform',
+        Sport: 'Athletics',
+        Event: 'Athletics Women\'s 800 metres',
         Medal: 'Bronze'
       },
       {
-        Name: 'Harrison Ford',
+        Name: 'Joe Bob',
         Sex: 'M',
         Age: '30',
         Height: '155',
@@ -36,40 +36,33 @@ describe('GET /api/v1/events/:id/medalists', () => {
         Games: '2016 Summer',
         Sport: 'Diving',
         Event: 'Diving Men\'s Platform',
-        Medal: 'Silver'
+        Medal: 'NA'
       },
       {
-        Name: 'Steven Seagal',
-        Sex: 'M',
+        Name: 'Sruthi Singh',
+        Sex: 'F',
         Age: '23',
         Height: '169',
         Weight: '45',
-        Team: 'USA',
+        Team: 'India',
         Games: '2016 Summer',
-        Sport: 'Diving',
-        Event: 'Diving Men\'s Platform',
+        Sport: 'Athletics',
+        Event: 'Athletics Women\'s 800 metres',
         Medal: 'Gold'
       },
       {
-        Name: 'Tom Hardy',
+        Name: 'Maha Abdalsalam',
         Sex: 'M',
         Age: '20',
         Height: '155',
         Weight: '60',
-        Team: 'USA',
+        Team: 'Egypt',
         Games: '2016 Summer',
         Sport: 'Diving',
         Event: 'Diving Men\'s Platform',
         Medal: 'NA'
       }
     ]
-  });
-
-  afterEach(async () => {
-    await destroyAll();
-  });
-
-  it('returns the medalists for a specific event', async () => {
     let athlete = await createAthlete(data[0]);
     let olympics = await createOlympics(data[0]);
     let sport = await createSport(data[0]);
@@ -93,31 +86,29 @@ describe('GET /api/v1/events/:id/medalists', () => {
     let sport4 = await createSport(data[3]);
     let event4 = await createEvent(data[3], sport4);
     await createAthleteEvent(data[3], athlete4, event4, olympics4);
+  });
 
+  afterEach(async () => {
+    await destroyAll();
+  });
+
+  it('return number of athletes, average weight by sex, average age', async () => {
     let expected = {
-      event: 'Diving Men\'s Platform',
-      medalists: [
-        {
-          name: 'Steven Seagal',
-          team: 'USA',
-          age: 23,
-          medal: 'Gold'
-        },
-        {
-          name: 'Harrison Ford',
-          team: 'USA',
-          age: 30,
-          medal: 'Silver'
-        },
-        {
-          name: 'Mark Hamill',
-          team: 'USA',
-          age: 26,
-          medal: 'Bronze'
+      "data" : {
+        "olympian_stats": {
+          "total_competing_olympians": 4,
+          "average_age": 24.75,
+          "average_weight": {
+            "unit": "kg",
+            "male_olympians": 65,
+            "female_olympians": 49.5
+          }
         }
-      ]
+      }
     }
-    let response = await request(app).get(`/api/v1/events/${event.id}/medalists`)
+
+    let query = 'query{olympian_stats{total_competing_olympians average_age average_weight{unit male_olympians female_olympians}}}'
+    let response = await request(app).get(`/api/v2/graphql-olympians?query=${query}`)
 
     expect(response.status).toBe(200)
     expect(response.body).toEqual(expected)
