@@ -28,9 +28,13 @@ async function olympianIndex(params) {
 
 async function olympianStats() {
   try {
-    let numAthletes = await _countAthletes();
-    let averageAge = await _averageAge();
-    let averageWeights = await _averageWeights();
+    let stats = await Promise.all([
+      _countAthletes(),
+      _averageAge(),
+      _averageWeights(),
+    ]);
+    let [numAthletes, averageAge, averageWeights] = stats;
+    
     return {
       olympian_stats: {
         total_competing_olympians: numAthletes,
